@@ -6,8 +6,9 @@ const AccountModel = new Schema({
     password: { type: String, required: true},
     name: String, 
     photo: String, 
-    created_at: {type: Date, default: new Date.now()},
-    updated_at: {type: Date, default: new Date.now()}
+    role: {type: Number, default: 0}, 
+    created_at: {type: Date, default: Date.now()},
+    updated_at: {type: Date, default: Date.now()}
 }, {
     collection: 'account'
 });
