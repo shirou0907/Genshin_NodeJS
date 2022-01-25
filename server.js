@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const port = process.env.PORT;
 const authRouter = require('./app/routers/auth')
+const userRouter = require('./app/routers/user')
 const db = require('./app/config/db')
 
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.use(cors({
 db.connectDB();
 
 app.use('/api', authRouter);
+app.use('/user', userRouter)
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
