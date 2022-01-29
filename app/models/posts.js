@@ -8,11 +8,11 @@ const Posts = new Schema({
     imgUrl: String, 
     comments: [{
         userID: {type: String, required: true},
-        details: String 
+        comment: String, 
+        date: {type: Date, default: Date.now()}
     }],
-    created_at: {type: Date, default: Date.now()},
-    updated_at: {type: Date, default: Date.now()}
 }, {
+    timestamps: true,
     collection: 'posts'
 });
 

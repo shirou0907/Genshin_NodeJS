@@ -7,9 +7,8 @@ const AccountModel = new Schema({
     name: String, 
     photo: String, 
     role: {type: Number, default: 0}, 
-    created_at: {type: Date, default: Date.now()},
-    updated_at: {type: Date, default: Date.now()}
 }, {
+    timestamps: true,
     collection: 'account'
 });
 
