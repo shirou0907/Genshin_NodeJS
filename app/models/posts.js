@@ -6,8 +6,11 @@ const Posts = new Schema({
     title: {type: 'String', required: true},
     description: {type: 'String', required: true},
     imgUrl: String, 
+    videoLink: String,
     comments: [{
         userID: {type: String, required: true},
+        username: String,
+        userimg: String,
         comment: String, 
         date: {type: Date, default: Date.now()}
     }],

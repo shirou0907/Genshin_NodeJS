@@ -81,7 +81,9 @@ module.exports.update = async(req, res, next) => {
     var password = req.body.password;
     var name = req.body.name;
     var photo = req.body.photo;
-    var hash = bcrypt.hashSync(password, 10);
+    if(password) {
+        var hash = bcrypt.hashSync(password, 10);
+    }
 
     var data = await Account.updateOne({_id: id}, {$set: {password: hash, name: name, photo: photo}})
     if(data) return res.json('Update Success')

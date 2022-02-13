@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = process.env.URL;
+const url = process.env.URI;
 
 const connectDB = async() => {
     try {
