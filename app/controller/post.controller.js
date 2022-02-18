@@ -27,6 +27,12 @@ module.exports.getPostById = async (req, res) => {
     res.json(data2)
 }
 
+module.exports.getPostByUser = async (req, res) => {
+    var userID = req.body.userID;
+    var data = await Post.find({userID: userID});
+    res.json(data)
+}
+
 module.exports.add = (req, res, next) => {
     var userID = req.params.id
     var title = req.body.title

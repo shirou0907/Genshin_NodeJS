@@ -16,10 +16,14 @@ router.post('/post/:id', AuthMiddleware.check, PostController.add);
 router.put('/post/:id', AuthMiddleware.check, PostController.update);
 router.delete('/post/:id', AuthMiddleware.check, PostController.delete);
 
+router.post('/post-by-user', PostController.getPostByUser);
+
 router.post('/comment', AuthMiddleware.check, CommentController.create);
 router.delete('/comment', AuthMiddleware.check, RoleMiddleware.checkRole, CommentController.delete);
 
 router.put('/info', AuthMiddleware.check, AccountController.update);
 router.delete('/info/:id', AuthMiddleware.check, RoleMiddleware.checkRole, AccountController.destroy);
+
+router.put('/change-password', AuthMiddleware.check, AccountController.changePassword);
 
 module.exports = router;

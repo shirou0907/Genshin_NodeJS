@@ -7,12 +7,12 @@ module.exports.register = (req, res, next) => {
     var email = req.body.email;
     var password = req.body.password;
     var name = req.body.name;
-    var photo = req.body.photo || 'https://lh3.googleusercontent.com/a-/AOh14GjHaxUz8GQR5cFtuY_5b4Bb3o_DjmVzLt2KjvJM=s96-c';
+    var photo = req.body.photo || 'https://i.pinimg.com/originals/8f/24/d3/8f24d3d652b45166721c3f1cc8b45c38.jpg';
     
     Account.findOne({ email: email })
     .then(data=> {
         if(data) {
-            res.json("Email đã được đăng ký!")
+            res.status(501).json("Email đã được đăng ký!")
         }
         else {
             bcrypt.genSalt(10, function(err, salt) {
@@ -78,14 +78,10 @@ module.exports.getInfo = async(req, res, next) => {
 
 module.exports.update = async(req, res, next) => {
     var id = req.body.id
-    var password = req.body.password;
+    
     var name = req.body.name;
     var photo = req.body.photo;
-    if(password) {
-        var hash = bcrypt.hashSync(password, 10);
-    }
-
-    var data = await Account.updateOne({_id: id}, {$set: {password: hash, name: name, photo: photo}})
+    var data = await Account.updateOne({_id: id}, {$set: {name: name, photo: photo}})
     if(data) return res.json('Update Success')
 }
 
@@ -93,4 +89,23 @@ module.exports.destroy = async(req, res) => {
     var id = req.params.id
     var data = await Account.deleteOne({_id: id})
     if(data) return res.json('Delete Success')
+}
+
+module.exports.changePassword = async(req, res) => {
+    var id = req.body.id;
+    var oldPassword = req.body.oldPassword;
+    var password = req.body.password;
+    if(password) {
+        var hash = bcrypt.hashSync(password, 10);
+    }
+    var result = await Account.findOne({_id: id})
+    bcrypt.compare(oldPassword, result.password, async (err, check) => {
+        if(!check) {
+            res.status(403).json('Mật khẩu cũ không chính xác!')
+        }
+        else {
+            var data = await Account.updateOne({_id: id}, {$set: {password: hash}})
+            if(data) return res.json('Update Success')
+        }
+    })
 }
