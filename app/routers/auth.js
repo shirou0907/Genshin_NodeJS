@@ -9,6 +9,7 @@ router.get('/', AuthMiddleware.check, (req, res) => {
     .then(data => res.json(data))
     .catch(err => res.status(500).json('Server Error'))
 })
+
 router.post('/login', AccountController.login);
 router.post('/register', AccountController.register);
 
